@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+const fs = require('fs-extra');
+const path = require('path');
+
+const argv = process.argv;
+const action = argv[2];
+
+const check = require('../libs/check');
+const fix = require('../libs/fix');
+
+function main(action, done) {
+    switch (action) {
+        case 'check':
+            return check(done);
+            break;
+        case 'fix':
+            let allow = ['php', 'html', 'js', 'css', 'front'];
+            if (!argv[3] || allow.indexOf(argv[3]) < 0) {
+                console.log("\n", '  plz input one of', '(' + allow + '):', 'gigcs-fixer fix'.yellow, ('['+['php', 'html', 'js', 'css', 'front'].join('|')+']').cyan, "\n");
+                return done();
+            }
+            let file = argv[4];
+            if (!file) {
+                console.log("\n", '  plz input the directory or file you want to fix: ', ('gigcs-fixer fix ' + argv[3]).yellow, '[directory or file]'.cyan, "\n");
+                return done();
+            }
+            file = file.startsWith('/') ? file : path.join(__dirname, file);
+            if (!fs.existsSync(file)) {
+                console.log("\n", '  file or directory [' + file.red + '] does not exist: ', "\n  ", ('gigcs-fixer fix ' + argv[3]).yellow, '[directory or file]'.cyan, "\n");
+                return done();
+            }
+            return fix(argv[3], file, done);
+            break;
+    }
+
+    console.log("\n".repeat(1));
+    console.log("  ", 'GIG Code Standard Fixer (ver', require('../package').version + ')', "\n");
+    console.log("  ", 'Usage:', "\n");
+    console.log("  ", "[check requirements] ".cyan, "gigcs-fixer fix [php|css|html|js|front] [directory or file]");
+    console.log("  ", "         [fix codes] ".cyan, "gigcs-fixer check");
+    console.log("\n".repeat(1));
+}
+
+main(action, err => {
+    if (err) return console.error(err);
+});

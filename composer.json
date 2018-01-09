@@ -1,0 +1,12 @@
+{
+    "name": "chainzhang/gig-code-standard",
+    "authors": [
+        {
+            "name": "ChainZhang",
+            "email": "zhang_chain@giginc.co.jp"
+        }
+    ],
+    "require": {
+        "friendsofphp/php-cs-fixer": "^2.9"
+    }
+}
