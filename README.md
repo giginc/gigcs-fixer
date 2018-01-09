@@ -42,3 +42,11 @@ npm install
 ```
 gigcs-fixer fix [php|css|html|js|front] [directory]
 ```
+
+## その他
+
+下記の整形ツール使用しています
+
+- PHP: <https://github.com/FriendsOfPHP/PHP-CS-Fixer>
+- HTML: <https://github.com/jonschlinkert/pretty>
+- JS&CSS: <https://github.com/beautify-web/js-beautify>
